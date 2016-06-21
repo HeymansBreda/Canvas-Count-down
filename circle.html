@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script type="text/javascript">
+
+        window.onload = function () {
+
+            var canvas = document.getElementById("canvas");
+
+            canvas.width = 800;
+            canvas.height = 750;
+
+            var context = canvas.getContext("2d");
+
+            context.lineWidth = 5;
+            context.strokeStyle = "#FF00FF";
+
+            for (var i = 1; i < 10; i++){
+                context.beginPath();
+                context.arc( 40 + i * 100 , 60 , 30 , 0 , 2 * Math.PI * (i + 1) / 10);
+                context.closePath();
+
+                context.fill()
+            }
+
+            context.fileStyle = "#FF0000"
+            for (var i = 1; i < 10; i++){
+                context.beginPath();
+                context.arc( 40 + i * 100 , 150 , 30 , 0 , 2 * Math.PI * (i + 1) / 10);
+                context.closePath();
+
+                context.stroke()
+            }
+
+
+
+        }
+    </script>
+</body>
+</html>
