@@ -4,10 +4,12 @@ var Radis = 8;
 var MARGIN_TOP = 60;
 var MARGIN_LEFT = 30;
 
-const endTime = new Date(2016,5,22,12,30,23);
-console.log(endTime)
+const endTime = new Date(2016,5,24,12,30,23);
+
 var curShowTimeSeconds = 0;
 
+var balls = [];
+const color = ["red","yellow","green","blue","pink","orange","#F0F0F0","#FFF000","#F0F000","#FF000F"];
 
 window.onload = function () {
 
@@ -18,6 +20,12 @@ window.onload = function () {
     canvas.height = WINDOW_HEIGHT;
 
     curShowTimeSeconds = getCurrentShowTimeSeconds();
+
+    setInterval(function(){
+        render( context );
+        update();
+
+    },500);
 
 
 
@@ -33,17 +41,31 @@ function getCurrentShowTimeSeconds(){
     return ret >= 0 ? ret : 0;
 }
 
+function update(){
+
+    var nextShowTimeSeconds = getCurrentShowTimeSeconds();
+
+    var nextHours = parseInt(nextShowTimeSeconds / 3600);
+    var nextMinutes = parseInt( (nextShowTimeSeconds - nextHours * 3600) / 60) ;
+    var nextSeconds = nextShowTimeSeconds % 60;
+
+    var curHours = parseInt(curShowTimeSeconds / 3600);
+    var curMinutes = parseInt( (curShowTimeSeconds - curHours * 3600) / 60) ;
+    var curSeconds = curShowTimeSeconds % 60;
+
+    if ( nextSeconds != curSeconds ){
+        curShowTimeSeconds = nextShowTimeSeconds;
+    }
+
+}
+
 function render( cxt ){
-
-
-
 
     var hours = parseInt(curShowTimeSeconds / 3600);
     var minutes = parseInt( (curShowTimeSeconds - hours * 3600) / 60) ;
     var seconds = curShowTimeSeconds % 60;
 
-    console.log(seconds);
-
+    cxt.clearRect(0,0,WINDOW_WIDTH,WINDOW_HEIGHT);
 
     renderDigit( MARGIN_LEFT , MARGIN_TOP , parseInt(hours/10), cxt);
     renderDigit( MARGIN_LEFT + 15 * ( Radis + 1 ), MARGIN_TOP, parseInt(hours%10), cxt);
@@ -63,7 +85,7 @@ function render( cxt ){
 
 function renderDigit( x , y, num , cxt){
     cxt.fillStyle = "rgb(0,102,153)";
-    cxt.shadowColor = "#FF0000"
+    cxt.shadowColor = "#FF0000";
 
     for(var i = 0; i < digit[num].length; i++){
         for(var j = 0; j < digit[num][i].length; j++){
